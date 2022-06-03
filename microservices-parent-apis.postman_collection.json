@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "302684fd-1194-4de4-9a49-2d42882cc3ac",
+		"name": "microservices-parent-apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12459422"
+	},
+	"item": [
+		{
+			"name": "PLACE_ORDER_API",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "HOzQleztA8qZVgKtGlRU4TW9qNymKl7F",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "spring-cloud-client",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "openid offline_access",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderLineItemsDtos\": [\r\n        {\r\n            \"id\": 1,\r\n            \"orderNumber\": \"256\",\r\n            \"skuCode\": \"IPhone X\",\r\n            \"price\": 1200,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_PROUCTS_API",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "HOzQleztA8qZVgKtGlRU4TW9qNymKl7F",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "spring-cloud-client",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "openid offline_access",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/product/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"product",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONFIG_PROPERTY_API",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "HOzQleztA8qZVgKtGlRU4TW9qNymKl7F",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "spring-cloud-client",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "openid offline_access",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/product/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"product",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

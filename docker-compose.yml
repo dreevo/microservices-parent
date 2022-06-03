@@ -1,0 +1,115 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7
+    container_name: microservices-mysql
+    environment:
+      MYSQL_DATABASE: 'order-service'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+
+    volumes:
+      - './.mysql-data/db:/var/lib/mysql'
+    networks:
+          microservices-network:
+
+  discoveryServer:
+    build: .\discovery-server
+    container_name: "discovery-server"
+    image: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      microservices-network:
+
+  configServer:
+    build: .\config-server
+    container_name: "config-server"
+    image: config
+    ports:
+      - "8888:8888"
+    networks:
+      microservices-network:
+
+  apiGateway:
+    build: .\api-gateway
+    container_name: "api-gateway"
+    image: gateway
+    ports:
+      - "9090:9090"
+    networks:
+      microservices-network:
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SERVER_PORT=9090
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI=http://keycloak:8080/realms/microservices-realm
+    depends_on:
+      - discoveryServer
+      - keycloak
+
+  inventoryService:
+    build: .\inventory-service
+    image: inventory
+    container_name: "inventory-service"
+    ports:
+      - "8081:8081"
+    networks:
+      microservices-network:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://microservices-mysql:3306/inventory-service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      - database
+      - apiGateway
+
+  orderService:
+    build: .\order-service
+    image: order
+    container_name: "order-service"
+    ports:
+      - "8082:8082"
+    networks:
+      microservices-network:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://microservices-mysql:3306/order-service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      - database
+      - apiGateway
+
+  productService:
+    build: .\product-service
+    container_name: "product-service"
+    image: product
+    ports:
+      - "8083:8083"
+    networks:
+      microservices-network:
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - TEST_CONFIG=testme
+    depends_on:
+      - apiGateway
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:18.0.0
+    container_name: "keycloak"
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+      KEYCLOAK_HOSTNAME: keycloak
+    command:
+      - start-dev
+    volumes:
+      - './keycloak-server:/opt/jboss/keycloak/standalone/data/'
+    networks:
+        microservices-network:
+
+networks:
+  microservices-network:
+    driver: bridge
