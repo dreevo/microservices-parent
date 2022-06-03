@@ -1,0 +1,85 @@
+<div class="content">
+  <div class="row add-row">
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-plus"
+      class="p-button-rounded p-button-text"
+      (click)="addItem()"
+    ></button>
+  </div>
+  <form [formGroup]="placeOrderForm">
+    <ng-container formArrayName="orderLineItemsDto">
+      <ng-container
+        *ngFor="let orderLineItem of orderLineItemsDto.controls; let i = index"
+      >
+        <div [formGroupName]="i" class="order-line-row">
+          <div style="display: flex; flex-direction: column; gap: 30px">
+            <div class="row" style="gap: 5em">
+              <span class="p-float-label">
+                <input
+                  id="order-number-input"
+                  type="text"
+                  pInputText
+                  formControlName="orderNumber"
+                />
+                <label for="order-number-input">Order Number</label>
+              </span>
+              <span class="p-float-label">
+                <input
+                  id="sku-code-input"
+                  type="text"
+                  pInputText
+                  formControlName="skuCode"
+                />
+                <label for="sku-code-input">Sku Code</label>
+              </span>
+            </div>
+            <div class="row" style="gap: 5em">
+              <span class="p-float-label">
+                <input
+                  id="price-input"
+                  type="text"
+                  pInputText
+                  formControlName="price"
+                />
+                <label for="price-input">Price</label>
+              </span>
+              <span class="p-float-label">
+                <input
+                  id="quantity-input"
+                  type="text"
+                  pInputText
+                  formControlName="quantity"
+                />
+                <label for="quantity-input">Quantity</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="remove-item">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text remove-item"
+              (click)="removeItem(i)"
+            ></button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </form>
+  <div class="row add-product">
+    <button
+      class="btn btn-fill btn-danger"
+      type="submit"
+      (click)="submit()"
+      [disabled]="placeOrderForm.invalid"
+    >
+      Submit
+    </button>
+  </div>
+</div>

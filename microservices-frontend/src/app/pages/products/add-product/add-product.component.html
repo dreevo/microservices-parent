@@ -1,0 +1,30 @@
+<form [formGroup]="addProductForm">
+  <div class="row">
+    <span class="p-float-label">
+      <input id="float-input" type="text" pInputText formControlName="name" />
+      <label for="float-input">Name</label>
+    </span>
+  </div>
+  <div class="row">
+    <span class="p-float-label">
+      <input
+        id="float-input"
+        type="text"
+        pInputText
+        formControlName="description"
+      />
+      <label for="float-input">Description</label>
+    </span>
+  </div>
+  <div class="row">
+    <span class="p-float-label">
+      <input id="float-input" type="text" pInputText formControlName="price" />
+      <label for="float-input">Price</label>
+    </span>
+  </div>
+  <div class="row add-product">
+    <button class="btn btn-fill btn-danger" type="submit" (click)="submit()" [disabled]="addProductForm.invalid">
+      Submit
+    </button>
+  </div>
+</form>

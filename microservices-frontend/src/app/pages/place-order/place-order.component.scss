@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 20px;
+}
+
+.order-line-row {
+  display: flex;
+  align-items: center;
+  gap: 5em;
+}
+.add-row {
+}
+.add-product {
+  justify-content: center;
+}
+.remove-item {
+  position: absolute;
+  right: 10%;
+}
