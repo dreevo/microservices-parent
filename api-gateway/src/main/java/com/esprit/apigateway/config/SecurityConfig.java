@@ -12,7 +12,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-        serverHttpSecurity.csrf().disable().authorizeExchange(ex -> ex.pathMatchers("/eureka/**")
+        serverHttpSecurity.cors().and().csrf().disable().authorizeExchange(ex -> ex.pathMatchers("/eureka/**")
                         .permitAll().anyExchange().authenticated())
                 .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);
         return serverHttpSecurity.build();
