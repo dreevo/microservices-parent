@@ -110,6 +110,13 @@ services:
     networks:
         microservices-network:
 
+  docker-frontend:
+    build: .\microservices-frontend
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./microservices-frontend/src:/frontend/src
+
 networks:
   microservices-network:
     driver: bridge
