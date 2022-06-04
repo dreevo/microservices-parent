@@ -23,6 +23,8 @@ import { AddProductComponent } from "./pages/products/add-product/add-product.co
 import { ReactiveFormsModule } from "@angular/forms";
 import { RippleModule } from "primeng/ripple";
 import { InputTextModule } from "primeng/inputtext";
+import { OAuthModule } from "angular-oauth2-oidc";
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -39,6 +41,12 @@ import { InputTextModule } from "primeng/inputtext";
     ReactiveFormsModule,
     RippleModule,
     InputTextModule,
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ["http://localhost:8080/api"],
+        sendAccessToken: true,
+      },
+    }),
   ],
   declarations: [
     AppComponent,
@@ -47,6 +55,7 @@ import { InputTextModule } from "primeng/inputtext";
     ProductsComponent,
     PlaceOrderComponent,
     AddProductComponent,
+    NotFoundComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
